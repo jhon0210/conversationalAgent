@@ -34,7 +34,7 @@ export const construirContenedor = (directory: string): Contenedor => {
   const soportes = new FsSoporteRepo(rutas);
   const salida = new FsSalidaRepo(rutas);
   const confirmaciones = new MemoriaConfirmacionStore();
-  const evaluador = new EvaluarSoportesService(soportes, new SystemClock(entorno.fechaEjecucion), {
+  const evaluador = new EvaluarSoportesService(soportes, new SystemClock(entorno.fechaEjecucion, entorno.zonaHoraria), {
     diasAvisoVencimiento: entorno.diasAvisoVencimiento,
   });
 

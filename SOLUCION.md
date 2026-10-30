@@ -128,7 +128,7 @@ El formato `portal` **no se implementa**: el agente responde "formato no soporta
 
 ## 7. Supuestos
 
-- **Fecha de ejecución = fecha real del sistema** (`FECHA_EJECUCION` solo la sobrescribe para pruebas). Un soporte está vencido si `vigencia_hasta` < fecha de ejecución; el mismo día sigue vigente. La fecha de la solicitud (`solicitud.fecha`) es solo informativa.
+- **Fecha de ejecución = fecha real del sistema** en la zona horaria `ZONA_HORARIA` (por defecto `America/Bogota`, para que un servidor en UTC no adelante el día). `FECHA_EJECUCION` solo la sobrescribe para pruebas. Un soporte está vencido si `vigencia_hasta` < fecha de ejecución; el mismo día sigue vigente. La fecha de la solicitud (`solicitud.fecha`) es solo informativa.
 - Con la fecha real los 4 casos de ejemplo quedan bloqueados por la Cámara de Comercio vencida; con `FECHA_EJECUCION=2026-09-03` se reproduce el escenario del PRD (Delta y Panamá listos; Ecuador y Honduras bloqueados).
 - Solo bloquean los soportes **exigidos por el caso**; un campo `faltante` no bloquea pero se lista.
 - El glosario es la única fuente de sinónimos. Una etiqueta sin equivalente (p. ej. "Referencias comerciales") es `faltante`.
@@ -149,7 +149,7 @@ El formato `portal` **no se implementa**: el agente responde "formato no soporta
 | HU-5 Manejo de errores | Hecho | Herramientas devuelven `{ok,…}` y nunca lanzan; errores sin traza; un caso malo no frena el siguiente. |
 | `proveedor_simular_envio` (P1) | Hecho | Exige confirmación en un turno posterior. |
 | Bonus `modulo/` | Hecho | `agent.md`, `SKILL.md` y `tools/proveedor.ts` se generan desde las fuentes de la aplicación (`npm run modulo`; `npm run modulo:check` verifica que no divergen). |
-| Enlace público | Preparado, **despliegue pendiente** | `Dockerfile` y `render.yaml` listos; falta desplegar en Render con la clave del modelo y probar la imagen. |
+| Enlace público | Hecho | Desplegado en Render (Docker): https://registro-proveedor-agente.onrender.com/ . Plan gratuito: el servicio se duerme tras inactividad. |
 
 ## 9. Uso de IA
 

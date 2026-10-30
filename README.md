@@ -13,7 +13,7 @@ Agente conversacional que prepara el registro de Periferia como proveedor: lee l
 |---|---|---|---|
 | 1 | **Repositorio de código fuente** con arquitectura limpia: system prompt separado, herramientas tipadas con `zod`, lógica del backend y front de chat funcional | System prompt: [agent/prompt.md](./agent/prompt.md) · Herramientas: [src/tools/proveedor.ts](./src/tools/proveedor.ts) (implementadas en `src/infrastructure/tools/`) · Backend: capas `src/domain`, `src/application`, `src/infrastructure` y controllers NestJS en `src/presentation/http` · Front: `src/presentation/web` | `npm install && npm run dev` y abrir `http://localhost:3000`. El front muestra cada llamada a herramienta en vivo y resalta en ámbar las confirmaciones humanas. |
 | 2 | **Script de verificación `demo.ts`**: procesa los casos llamando a las herramientas, sin modelo de lenguaje | [demo.ts](./demo.ts) | `npm install && npm run demo` (sin clave de ningún proveedor). Imprime un resumen por caso y 76 comprobaciones; con `FECHA_EJECUCION` fija el resultado es el mismo en ejecuciones consecutivas. |
-| 3 | **Enlace público funcional** para la defensa | `Dockerfile` y `render.yaml` | Ver "Despliegue" más abajo. Link de prueba: _(pendiente: completar con la URL de Render)_. |
+| 3 | **Enlace público funcional** para la defensa | `Dockerfile` y `render.yaml` | Ver "Despliegue" más abajo. Link de prueba: https://registro-proveedor-agente.onrender.com/ |
 | 4 | **Documentación técnica** [SOLUCION.md](./SOLUCION.md) | Arquitectura (§2), ciclo del agente (§3), elección del modelo y análisis de costos (§4), decisiones de diseño (§6), cobertura (§8) y consideraciones de producción (§10) | Leer el documento; sigue la estructura obligatoria del PRD. |
 
 Extras: módulo reutilizable en `modulo/` (bonus) y streaming de progreso por SSE en el chat.
@@ -52,6 +52,7 @@ El servidor lee `.env` al arrancar y limpia `out/`.
 | `LLM_TIMEOUT_MS` | `60000` | Timeout por llamada al modelo. |
 | `FECHA_EJECUCION` | fecha del sistema | `YYYY-MM-DD`. Fija la fecha con la que se evalúan las vigencias. |
 | `DIAS_AVISO_VENCIMIENTO` | `30` | Días para el aviso "vence pronto" (no bloquea). |
+| `ZONA_HORARIA` | `America/Bogota` | Zona con la que se calcula "hoy" si no se fija `FECHA_EJECUCION` (un servidor en UTC adelantaría el día). |
 | `PORT` | `3000` | Puerto HTTP. |
 
 ### Sin pagar: proveedores gratuitos
@@ -113,7 +114,7 @@ El `sessionId` admite letras, números, `_` y `-` (máx. 64). Hay un límite de 
 | `npm run demo` | Verificación sin modelo. |
 | `npm run typecheck` | Chequeo de tipos. |
 
-## Despliegue (URL pública) — pendiente
+## Despliegue (URL pública)
 
 Un único servicio con Docker sirve API y front desde el mismo origen. Con Render:
 
@@ -131,7 +132,7 @@ docker build -t registro-proveedor-agente .
 docker run --rm -p 3000:3000 --env-file .env registro-proveedor-agente
 ```
 
-Link de prueba: _(pendiente: completar tras el despliegue)_. Clave de acceso: no aplica (el link es público; el gasto está limitado por `MAX_TOKENS_SESION` y el límite por IP).
+Link de prueba: https://registro-proveedor-agente.onrender.com/ (plan gratuito: la primera carga puede tardar cerca de un minuto en despertar el servicio). Clave de acceso: no aplica (el link es público; el gasto está limitado por `MAX_TOKENS_SESION` y el límite por IP).
 
 ## Módulo reutilizable (bonus)
 
