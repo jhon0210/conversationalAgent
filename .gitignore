@@ -1,0 +1,30 @@
+# Dependencias y compilados
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Salida generada en ejecución (se limpia al iniciar)
+out/
+
+# Secretos y configuración local: nunca al repositorio
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+
+# Archivos temporales y de pruebas locales
+*.tmp
+*.tmp.*
+*.tmp.ts
+coverage/
+
+# Sistema operativo y editores
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
