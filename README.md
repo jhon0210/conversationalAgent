@@ -7,6 +7,17 @@ Agente conversacional que prepara el registro de Periferia como proveedor: lee l
 - Front de chat sin build (HTML + JS), servido por el mismo backend.
 - Diseño completo y decisiones: [SOLUCION.md](./SOLUCION.md).
 
+## Entregables y cómo verificarlos
+
+| # | Entregable | Evidencia en este repositorio | Cómo verificarlo |
+|---|---|---|---|
+| 1 | **Repositorio de código fuente** con arquitectura limpia: system prompt separado, herramientas tipadas con `zod`, lógica del backend y front de chat funcional | System prompt: [agent/prompt.md](./agent/prompt.md) · Herramientas: [src/tools/proveedor.ts](./src/tools/proveedor.ts) (implementadas en `src/infrastructure/tools/`) · Backend: capas `src/domain`, `src/application`, `src/infrastructure` y controllers NestJS en `src/presentation/http` · Front: `src/presentation/web` | `npm install && npm run dev` y abrir `http://localhost:3000`. El front muestra cada llamada a herramienta en vivo y resalta en ámbar las confirmaciones humanas. |
+| 2 | **Script de verificación `demo.ts`**: procesa los casos llamando a las herramientas, sin modelo de lenguaje | [demo.ts](./demo.ts) | `npm install && npm run demo` (sin clave de ningún proveedor). Imprime un resumen por caso y 76 comprobaciones; con `FECHA_EJECUCION` fija el resultado es el mismo en ejecuciones consecutivas. |
+| 3 | **Enlace público funcional** para la defensa | `Dockerfile` y `render.yaml` | Ver "Despliegue" más abajo. Link de prueba: _(pendiente: completar con la URL de Render)_. |
+| 4 | **Documentación técnica** [SOLUCION.md](./SOLUCION.md) | Arquitectura (§2), ciclo del agente (§3), elección del modelo y análisis de costos (§4), decisiones de diseño (§6), cobertura (§8) y consideraciones de producción (§10) | Leer el documento; sigue la estructura obligatoria del PRD. |
+
+Extras: módulo reutilizable en `modulo/` (bonus) y streaming de progreso por SSE en el chat.
+
 ## Requisitos
 
 - Node 20 o superior y Git.
