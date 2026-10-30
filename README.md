@@ -9,17 +9,21 @@ Agente conversacional que prepara el registro de Periferia como proveedor: lee l
 
 ## Requisitos
 
-- Node 20 o superior.
-- Una clave de Anthropic (solo para el chat con modelo; `demo.ts` no la necesita).
+- Node 20 o superior y Git.
+- Una clave de un proveedor de modelos para el chat (Anthropic o cualquier API compatible con OpenAI, incluidas opciones gratuitas: ver "Sin pagar"). `demo.ts` no necesita clave.
 
 ## Levantar en local
 
 ```bash
+git clone https://github.com/jhon0210/conversationalAgent.git
+cd conversationalAgent
 npm install
 cp .env.example .env      # en Windows: copy .env.example .env
-# edita .env y define ANTHROPIC_API_KEY
+# edita .env: define el proveedor y su clave (ver variables abajo)
 npm run dev               # http://localhost:3000
 ```
+
+Docker es opcional (solo para desplegar); no hace falta para correr el proyecto.
 
 El servidor lee `.env` al arrancar y limpia `out/`.
 
