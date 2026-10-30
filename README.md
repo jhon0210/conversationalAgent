@@ -142,10 +142,10 @@ agent/prompt.md                      System prompt (XML)
 src/domain/                          Capa 1: reglas de negocio puras (RN1, RN3, RN4, vigencias)
 src/application/                     Capa 2: casos de uso, puertos y bucle del agente
 src/infrastructure/                  Capa 3: archivos, xlsx/pdf, LLM, sesiones, herramientas, conocimiento
-src/presentation/                    Capa 4: controllers NestJS y front de chat
+src/presentation/                    Capa 4: controllers NestJS (http/) y front de chat (web/: index.html, app.js, styles.css)
 src/tools/proveedor.ts               Ruta exigida por el PRD (re-exporta infrastructure/tools/proveedor.ts)
 src/app.module.ts, src/main.ts       Raíz de composición y arranque
 demo.ts                              Verificación sin modelo
 fixtures/                            Entregados por Periferia (solo lectura)
-out/                                 Generado en ejecución
+out/                                 Generado en ejecución (no se versiona: está en .gitignore; el servidor y demo.ts lo crean al iniciar)
 ```
