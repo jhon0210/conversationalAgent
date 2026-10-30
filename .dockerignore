@@ -1,0 +1,9 @@
+node_modules
+dist
+out
+.env
+.git
+*.md
+!agent/prompt.md
+!src/infrastructure/knowledge/registro-proveedor.md
+PRD.md
