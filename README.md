@@ -108,7 +108,7 @@ Un único servicio con Docker sirve API y front desde el mismo origen. Con Rende
 
 1. Sube el repositorio a GitHub.
 2. En Render: **New → Blueprint**, selecciona el repositorio (usa [render.yaml](./render.yaml)).
-3. Carga `ANTHROPIC_API_KEY` en el panel de variables de entorno.
+3. Render pedirá los valores marcados como secretos: carga `LLM_API_KEY` y `LLM_MODEL`. El proveedor y la URL base (Gemini) ya vienen en `render.yaml`; para otro proveedor, edita `LLM_PROVIDER` y `LLM_BASE_URL` en el panel (**Environment**).
 4. Espera el despliegue y abre la URL. Verifica `GET /api/health`.
 
 Antes de la defensa, abre la URL una vez para despertar el servicio (el plan gratuito se duerme tras inactividad).
@@ -117,7 +117,7 @@ Prueba local de la imagen:
 
 ```bash
 docker build -t registro-proveedor-agente .
-docker run --rm -p 3000:3000 -e ANTHROPIC_API_KEY=... registro-proveedor-agente
+docker run --rm -p 3000:3000 --env-file .env registro-proveedor-agente
 ```
 
 Link de prueba: _(pendiente: completar tras el despliegue)_. Clave de acceso: no aplica (el link es público; el gasto está limitado por `MAX_TOKENS_SESION` y el límite por IP).

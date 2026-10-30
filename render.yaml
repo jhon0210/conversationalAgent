@@ -6,15 +6,13 @@ services:
     healthCheckPath: /api/health
     envVars:
       - key: LLM_PROVIDER
-        value: anthropic   # cambiar a openai para Gemini, GitHub Models, etc.
-      - key: ANTHROPIC_API_KEY
-        sync: false
+        value: openai   # API compatible con OpenAI (Gemini por defecto); usar anthropic para Claude
       - key: LLM_BASE_URL
-        sync: false
+        value: https://generativelanguage.googleapis.com/v1beta/openai/
       - key: LLM_API_KEY
-        sync: false
+        sync: false     # se carga en el panel de Render; nunca en el repositorio
       - key: LLM_MODEL
-        value: claude-sonnet-4-5
+        sync: false     # p. ej. el mismo id que usas en tu .env local
       - key: MAX_ITERACIONES
         value: "25"
       - key: MAX_TOKENS_SESION
