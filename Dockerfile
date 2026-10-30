@@ -16,6 +16,8 @@ COPY agent ./agent
 COPY fixtures ./fixtures
 COPY src/infrastructure/knowledge ./src/infrastructure/knowledge
 COPY src/presentation/web ./src/presentation/web
+# El usuario no root debe poder crear y borrar out/ (formularios, paquetes y logs).
+RUN mkdir -p out && chown node:node /app out
 USER node
 EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=15s \

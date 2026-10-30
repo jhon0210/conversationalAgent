@@ -19,12 +19,14 @@ interface Definicion<S extends z.ZodRawShape> {
   run(args: z.infer<z.ZodObject<S>>, contenedor: Contenedor, ctx: ToolContext): Promise<ResultadoHerramienta>;
 }
 
-const mensajeDeError = (error: unknown): string => {
+const mensajeDeError = (error: unknown, herramienta: string): string => {
   if (error instanceof AppError) return error.message;
   if (error instanceof z.ZodError) {
     const campos = error.issues.map((i) => i.path.join(".") || "(raíz)").join(", ");
     return `Argumentos inválidos en: ${campos}`;
   }
+  // El detalle va solo al log del servidor (nunca al chat) para poder diagnosticar.
+  console.error(`[herramienta ${herramienta}]`, error instanceof Error ? `${error.name}: ${error.message}` : String(error));
   return "Error interno al ejecutar la herramienta";
 };
 
@@ -48,7 +50,7 @@ export const definirHerramienta = <S extends z.ZodRawShape>(def: Definicion<S>) 
       await contenedor.audit.registrar({ caso: casoDe(args), herramienta: def.nombre, ok: true, resumen });
       return JSON.stringify({ ok: true, data });
     } catch (error) {
-      const mensaje = mensajeDeError(error);
+      const mensaje = mensajeDeError(error, def.nombre);
       await contenedor?.audit.registrar({ caso: casoDe(args), herramienta: def.nombre, ok: false, resumen: mensaje });
       return JSON.stringify({ ok: false, error: mensaje });
     }
